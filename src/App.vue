@@ -11,11 +11,11 @@
       </v-layout>
 
       <v-layout justify-center my-5>
-        <v-tabs fixed-tabs color="green" @change="changeTab">
-          <v-tab>
+        <v-tabs fixed-tabs color="green">
+          <v-tab to="/" exact>
             All Pokemon
           </v-tab>
-          <v-tab>
+          <v-tab to="/my-pokemon" exact>
             My Pokemon
           </v-tab>
         </v-tabs>
@@ -34,16 +34,7 @@ export default {
   components: {},
   data: () => ({
     //
-  }),
-  methods: {
-    changeTab(e) {
-      if (e === 0) {
-        this.$router.push("/");
-      } else {
-        this.$router.push("/my-pokemon");
-      }
-    }
-  }
+  })
 };
 </script>
 
