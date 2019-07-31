@@ -9,11 +9,12 @@
           label="Search Pokemon"
           @change="searchData = $event"
           @keydown="filterPokemon(searchData)"
+          @click:append="filterPokemon(searchData)"
         ></v-text-field>
       </v-flex>
     </v-layout>
 
-    <v-layout wrap v-if="limitedPokemon.length" justify-center>
+    <v-layout wrap v-if="filteredPokemon.length" justify-center>
       <v-flex
         v-for="poke in limitedPokemon"
         :key="`${poke.name}`"
@@ -25,15 +26,20 @@
       >
         <CardList :name="poke.name" :owned="poke.owned ? poke.owned : 0" />
       </v-flex>
-      <v-flex xs12 text-center>
+
+      <v-flex v-if="filteredPokemon.length > limit" xs12 text-center>
         <v-btn rounded color="green" dark class="my-10" @click="limit += adder">
           Load More
         </v-btn>
       </v-flex>
     </v-layout>
 
-    <div v-if="!limitedPokemon.length" class="text-center my-12">
+    <div v-if="!listPokemons.length" class="text-center my-12">
       <v-progress-circular indeterminate color="green" />
+    </div>
+
+    <div v-if="!filteredPokemon.length" class="text-center my-12">
+      <h2 class="grey--text">Pokemon Not Found</h2>
     </div>
   </v-container>
 </template>
@@ -64,7 +70,7 @@ export default {
         ? this.filteredPokemon.slice(0, this.limit)
         : this.filteredPokemon;
     },
-    ...mapState(["filteredPokemon"])
+    ...mapState(["listPokemons", "filteredPokemon"])
   },
   methods: {
     ...mapMutations(["filterPokemon"]),

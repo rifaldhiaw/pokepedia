@@ -11,7 +11,7 @@
       </v-layout>
 
       <v-layout justify-center my-5>
-        <v-tabs fixed-tabs color="green">
+        <v-tabs centered color="green">
           <v-tab to="/" exact>
             All Pokemon
           </v-tab>
