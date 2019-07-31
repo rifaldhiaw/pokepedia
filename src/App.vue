@@ -1,36 +1,57 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-app-bar>
+    <v-container>
+      <v-layout align-end justify-center logo mb-12>
+        <router-link to="/" class="no-underline">
+          <h1 class="display-2 font-weight-bold text-center mt-20">
+            <span class="blue-grey--text text--darken-4">Poke</span>
+            <span class="green--text">Pedia</span>
+          </h1>
+        </router-link>
+      </v-layout>
 
-    <v-content>
-      <HelloWorld />
-    </v-content>
+      <v-layout justify-center my-5>
+        <v-tabs fixed-tabs color="green" @change="changeTab">
+          <v-tab>
+            All Pokemon
+          </v-tab>
+          <v-tab>
+            My Pokemon
+          </v-tab>
+        </v-tabs>
+      </v-layout>
+
+      <v-content>
+        <router-view />
+      </v-content>
+    </v-container>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
-
 export default {
   name: "App",
-  components: {
-    HelloWorld
-  },
+  components: {},
   data: () => ({
     //
-  })
+  }),
+  methods: {
+    changeTab(e) {
+      if (e === 0) {
+        this.$router.push("/");
+      } else {
+        this.$router.push("/my-pokemon");
+      }
+    }
+  }
 };
 </script>
+
+<style scoped>
+.logo {
+  height: 150px;
+}
+.no-underline {
+  text-decoration: none;
+}
+</style>
