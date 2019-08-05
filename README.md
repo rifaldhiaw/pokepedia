@@ -1,8 +1,8 @@
 # pokepedia
 
-framework: vue.js
-utilities: vuex, vue-router
-api: pokepai using pokeapi-js-wrapper (due on caching rule)
+- framework: vue.js
+- utilities: vuex, vue-router
+- api: pokepai using pokeapi-js-wrapper (due on caching rule)
 
 ## Project setup
 
