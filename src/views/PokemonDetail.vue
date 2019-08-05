@@ -139,7 +139,11 @@
           </h3>
         </v-alert>
 
-        <CatchButtonVue :isPulse="isCatchProcess" @click="catchPokemon" class="mb-10"/>
+        <CatchButtonVue
+          :isPulse="isCatchProcess"
+          @click="catchPokemon"
+          class="mb-10"
+        />
       </v-flex>
     </v-layout>
   </v-container>
