@@ -10,7 +10,7 @@
         </router-link>
       </v-layout>
 
-      <v-layout justify-center my-5>
+      <v-layout justify-center my-5 class="hidden-sm-and-down">
         <v-tabs centered color="green">
           <v-tab to="/" exact>
             All Pokemon
@@ -25,6 +25,18 @@
         <router-view />
       </v-content>
     </v-container>
+
+    <v-bottom-navigation app fixed grow color="green" class="hidden-sm-and-up">
+      <v-btn value="allPokemon" height="auto" to="/" exact>
+        <span>All Pokemon</span>
+        <v-icon>home</v-icon>
+      </v-btn>
+
+      <v-btn value="myPokemon" height="auto" to="/my-pokemon" exact>
+        <span>My Pokemon</span>
+        <v-icon>favorite</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </v-app>
 </template>
 

@@ -2,15 +2,32 @@
   <v-container class="py-12">
     <v-layout justify-center>
       <v-flex xs12 md4>
-        <v-text-field
-          solo
-          color="green"
-          append-icon="search"
-          label="Search Pokemon"
-          @change="searchData = $event"
-          @keydown="filterPokemon(searchData)"
-          @click:append="filterPokemon(searchData)"
-        ></v-text-field>
+        <v-layout justify-center>
+          <v-flex xs9>
+            <v-text-field
+              color="green"
+              label="Search Pokemon"
+              clearable
+              :value="serchDataLocal"
+              @change="serchDataLocal = $event"
+              @keydown="setSearchQuery(serchDataLocal)"
+              @click:clear="
+                serchDataLocal = '';
+                setSearchQuery(serchDataLocal);
+              "
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs3 px-2>
+            <v-btn
+              outlined
+              fab
+              color="green"
+              @click="setSearchQuery(serchDataLocal)"
+            >
+              <v-icon>search</v-icon>
+            </v-btn>
+          </v-flex>
+        </v-layout>
       </v-flex>
     </v-layout>
 
@@ -24,7 +41,7 @@
         px-2
         py-2
       >
-        <CardList :name="poke.name" :owned="poke.owned ? poke.owned : 0" />
+        <CardList :name="poke.name" :owned="poke.owned ? poke.owned : '0'" />
       </v-flex>
 
       <v-flex v-if="filteredPokemon.length > limit" xs12 text-center>
@@ -34,18 +51,18 @@
       </v-flex>
     </v-layout>
 
-    <div v-if="!listPokemons.length" class="text-center my-12">
-      <v-progress-circular indeterminate color="green" />
+    <div v-if="!isLoading && !filteredPokemon.length" class="text-center my-12">
+      <h2 class="grey--text">Pokemon Not Found</h2>
     </div>
 
-    <div v-if="!filteredPokemon.length" class="text-center my-12">
-      <h2 class="grey--text">Pokemon Not Found</h2>
+    <div v-if="isLoading" class="text-center my-12">
+      <v-progress-circular indeterminate color="green" />
     </div>
   </v-container>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import CardList from "../components/CardList.vue";
 
 export default {
@@ -56,10 +73,11 @@ export default {
     if (!this.filteredPokemon.length) {
       this.getPokemonsList();
     }
+    this.serchDataLocal = this.searchQuery;
   },
   data() {
     return {
-      searchData: "",
+      serchDataLocal: "",
       limit: 15,
       adder: 15
     };
@@ -70,10 +88,11 @@ export default {
         ? this.filteredPokemon.slice(0, this.limit)
         : this.filteredPokemon;
     },
-    ...mapState(["listPokemons", "filteredPokemon"])
+    ...mapState(["searchQuery", "isLoading"]),
+    ...mapGetters(["filteredPokemon"])
   },
   methods: {
-    ...mapMutations(["filterPokemon"]),
+    ...mapMutations(["setSearchQuery"]),
     ...mapActions(["getPokemonsList"])
   }
 };
